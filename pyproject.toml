@@ -12,6 +12,9 @@ readme = "README.md"
 license = {text = "MIT"}
 dynamic = ["version"]
 
+[project.optional-dependencies]
+pydantic = ["pydantic"]
+
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
