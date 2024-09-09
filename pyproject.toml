@@ -1,0 +1,26 @@
+[project]
+name = "pieces"
+description = "Package coordinates as proper types."
+authors = [
+    {name = "Ryan Smith", email = "ryan.d.smith.106@gmail.com"},
+]
+dependencies = [
+    "attrs>=24.2.0",
+]
+requires-python = ">=3.7"
+readme = "README.md"
+license = {text = "MIT"}
+dynamic = ["version"]
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm]
+distribution = true
+
+[tool.pdm.version]
+fallback_version = "0.0.0"
+source = "scm"
+write_template = "__version__: str = \"{}\"\n"
+write_to = "pieces/version.py"
