@@ -5,9 +5,6 @@ on:
     tags:
       - "v*"
 
-permissions:
-  contents: read
-
 jobs:
   release-pypi:
     name: Release (PyPI)
@@ -16,6 +13,7 @@ jobs:
       name: pypi
       url: https://pypi.org/p/pieces
     permissions:
+      contents: read
       id-token: write
     steps:
       - name: Checkout
