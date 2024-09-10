@@ -9,9 +9,6 @@ jobs:
   release-pypi:
     name: Release (PyPI)
     runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/p/pieces
     permissions:
       contents: read
       id-token: write
