@@ -28,6 +28,7 @@ format = "ruff format --config ./pyproject.toml src/ tests/"
 lint-check = "ruff check --config ./pyproject.toml src/ tests/"
 lint = "ruff check --fix --config ./pyproject.toml src/ tests/"
 type-check = "mypy --config-file ./pyproject.toml src/"
+test = "pytest"
 vuln-check = "bandit -rc pyproject.toml src/ tests/"
 verify = {composite = ["lint", "format", "type-check", "vuln-check"]}
 
@@ -43,6 +44,10 @@ dev = [
     "bandit>=1.7.5",
     "mypy>=1.4.1",
 ]
+test = [
+    "pytest>=7.4.4",
+    "pytest-cov>=4.1.0",
+]
 
 [tool.bandit]
 exclude_dirs = [".venv", ".*_cache", ".pdm-build", "docs", "htmlcov", ".gitlab"]
@@ -50,6 +55,11 @@ exclude_dirs = [".venv", ".*_cache", ".pdm-build", "docs", "htmlcov", ".gitlab"]
 # B101: Test for use of assert
 [tool.bandit.assert_used]
 skips = ["*_test.py", "*test_*.py"]
+
+[tool.coverage.report]
+exclude_also = [
+    '^\s*\.\.\.$'  # exclude lines which are Ellipsis objects
+]
 
 [tool.mypy]
 python_version = "3.7"
@@ -68,6 +78,18 @@ warn_unused_configs = true
 warn_no_return = true
 warn_unreachable = true
 show_traceback = true
+
+[tool.pytest.ini_options]
+addopts = [
+    "--cov=pieces",
+    "--cov-report=html",
+    "--cov-report=term",
+    "--cov-report=xml",
+    "--junitxml=junit.xml",
+    "--cov-branch"
+]
+pythonpath = ["src"]
+testpaths = ["tests"]
 
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.
