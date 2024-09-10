@@ -1,0 +1,33 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  release-pypi:
+    name: Release (PyPI)
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/pieces
+    permissions:
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.1.1
+      - name: Setup Python (3.7)
+        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c  # v5.0.0
+        with:
+          python-version: "3.7"
+          architecture: x64
+      - name: Install PDM
+        run: pip install --upgrade pip && pip install setuptools wheel pdm
+      - name: Build Distribution(s)
+        run: pdm build --no-sdist
+      - name: Publish Distribution(s)
+        run: pdm publish --no-build
